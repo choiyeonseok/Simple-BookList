@@ -3,12 +3,21 @@ function bindLogoutButton() {
     btnLogout.addEventListener('click', logout);
 }
 
+function getToken() {
+    return localStorage.getItem('token');
+}
+
 async function main() { 
 
     // 버튼에 이벤트 연결
     bindLogoutButton();
-    
+
     // 토큰 체크
+    const token = getToken();
+    if (token === null) {
+        location.assign('/login'); // redirect
+        return;
+    }
 
     // 토큰으로 서버에서 나의 정보 받아오기
 
