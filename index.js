@@ -70,8 +70,33 @@ function render(books) {
     `;
     listElement.append(bookElement);
     }
+
+    document.querySelectorAll('.btn-delete').forEach(element => {
+        element.addEventListener('click', async event => {
+            const bookId = event.target.dataset.bookid;
+            try {
+                await deleteBook(bookId);
+                location.reload();
+            } catch (error) {
+                console.log(error);
+            }
+        });
+    });
 }
 
+async function deleteBook(bookId) {
+    const token = getToken();
+    if (token === null) {
+        location.assign('/login');
+        return;
+    }
+    await axios.delete(`https//api.marktube.tv/v1/books/${bookId}`, {
+        headers: {
+            Authorization: `Bearer $(token)`,
+        },
+    });
+    return;
+}
 async function main() { 
 
     // 버튼에 이벤트 연결
