@@ -35,6 +35,43 @@ async function getBooks(token) {
     }
 }
 
+function render(books) {
+    const listElement = document.querySelector('#list');
+    for (let i = 0; i < books.length; i++) {
+        const bookElement = document.createElement('div');
+        bookElement.classList.value = 'col-md-4';
+        bookElement.innerHTML = `
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <p class="card-text>${book.title === '' ? '제목없음' : book.title}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <a href="/book?id=${book.bookId}">
+                        <button
+                            type="button"
+                            class="btn btn-sm btn-outline-secondary"
+                        >
+                            View
+                        </button>
+                    </a>
+                    <button
+                        type="button"
+                        class="btn btn-sm btn-outline-secondary btn-delete"
+                        data-book-id="${book.bookId}"
+                    >
+                        Delete
+                    </button>
+                </div>
+                <small class="text-muted">${new Date(
+                    book.createdAt,
+                ).toLocaleDateString()}</small>
+            </div>
+        </div>
+    </div>
+    `;
+    listElement.append(bookElement);
+    }
+}
+
 async function main() { 
 
     // 버튼에 이벤트 연결
@@ -62,6 +99,7 @@ async function main() {
     }
 
     //받아온 책을 그리기
+    render(books);
 
 }
 
